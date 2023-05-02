@@ -1,4 +1,4 @@
-﻿using Autobarn.Data;
+using Autobarn.Data;
 using Autobarn.Data.Entities;
 using Autobarn.Website.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -17,6 +17,7 @@ namespace Autobarn.Website.Controllers {
 
 		public IActionResult Details(string id) {
 			var vehicle = db.FindVehicle(id);
+			if (vehicle == null) return NotFound();
 			return View(vehicle);
 		}
 
