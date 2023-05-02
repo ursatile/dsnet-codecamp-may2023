@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Autobarn.Data;
@@ -17,8 +18,22 @@ public class VehiclesController : ControllerBase {
 
 	private const int PAGE_SIZE = 10;
 	[HttpGet]
-	public IEnumerable<Vehicle> Get(int index = 0) {
-		return db.ListVehicles().Skip(index).Take(PAGE_SIZE);
+	public IActionResult Get(int index = 0) {
+		var vehicles = db.ListVehicles().Skip(index).Take(PAGE_SIZE);
+		var result = new {
+			_links = new {
+				previous = new {
+					href = $"/api/vehicles?index={index - PAGE_SIZE}"
+				},
+				next = new {
+					href = $"/api/vehicles?index={index+PAGE_SIZE}"
+				}
+			},
+			_items = vehicles
+		};
+		return Ok(result);
+
+
 	}
 
 	//// GET api/<VehiclesController>/5
