@@ -71,7 +71,13 @@ public class VehiclesController : ControllerBase {
 			VehicleModel = model
 		};
 		db.CreateVehicle(v);
-		var message = new NewVehicleListed();
+		var message = new NewVehicleListed {
+			Registration = v.Registration,
+			Color = v.Color,
+			Year = v.Year,
+			Model = v.VehicleModel?.Name ?? "missing",
+			Make = v.VehicleModel?.Manufacturer?.Name ?? "missing"
+		};
 		bus.PubSub.Publish(message);
 		return Created($"/api/vehicles/{v.Registration}", v.ToResource());
 	}

@@ -45,8 +45,8 @@ public class AuditLogService : IHostedService {
 	}
 
 	private async Task HandleNewVehicleListed(NewVehicleListed message) {
-		logger.LogInformation($"{Thread.CurrentThread.ManagedThreadId} NewVehicleListed: {message}");
+		logger.LogInformation($"START {Thread.CurrentThread.ManagedThreadId} NewVehicleListed: {message}");
 		await Task.Delay(TimeSpan.FromSeconds(1));
-		logger.LogInformation($"{Thread.CurrentThread.ManagedThreadId} NewVehicleListed: {message}");
+		logger.LogInformation($"STOP {Thread.CurrentThread.ManagedThreadId} NewVehicleListed: {message}");
 	}
 }
