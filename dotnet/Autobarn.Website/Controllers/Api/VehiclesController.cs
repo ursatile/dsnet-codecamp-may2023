@@ -4,7 +4,9 @@ using System.Dynamic;
 using System.Linq;
 using Autobarn.Data;
 using Autobarn.Data.Entities;
+using Autobarn.Messages;
 using Autobarn.Website.Models;
+using EasyNetQ;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Autobarn.Website.Controllers.Api;
@@ -13,9 +15,11 @@ namespace Autobarn.Website.Controllers.Api;
 [ApiController]
 public class VehiclesController : ControllerBase {
 	private readonly IAutobarnDatabase db;
+	private readonly IBus bus;
 
-	public VehiclesController(IAutobarnDatabase db) {
+    public VehiclesController(IAutobarnDatabase db, IBus bus) {
 		this.db = db;
+		this.bus = bus;
 	}
 
 	private const int PAGE_SIZE = 10;
@@ -67,6 +71,8 @@ public class VehiclesController : ControllerBase {
 			VehicleModel = model
 		};
 		db.CreateVehicle(v);
+		var message = new NewVehicleListed();
+		bus.PubSub.Publish(message);
 		return Created($"/api/vehicles/{v.Registration}", v.ToResource());
 	}
 
