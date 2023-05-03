@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Autobarn.Data;
@@ -53,6 +54,10 @@ public class AutobarnQuery : ObjectGraphType {
 	private IEnumerable<Vehicle>
 		GetVehiclesByColor(IResolveFieldContext context) {
 		var color = context.GetArgument<string>("color");
+		if (color == "error") {
+			context.Errors.Add(new ExecutionError("Sorry, 'error' is not a valid color"));
+			return null;
+		}
 		var vehicles = db.ListVehicles().Where(v => v.Color.Contains(color));
 		return vehicles;
 	}
