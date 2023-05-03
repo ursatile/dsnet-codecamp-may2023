@@ -8,6 +8,7 @@ using Autobarn.Messages;
 using Autobarn.Website.Models;
 using EasyNetQ;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace Autobarn.Website.Controllers.Api;
 
@@ -16,10 +17,13 @@ namespace Autobarn.Website.Controllers.Api;
 public class VehiclesController : ControllerBase {
 	private readonly IAutobarnDatabase db;
 	private readonly IBus bus;
+	private readonly ILogger<VehiclesController> logger;
 
-    public VehiclesController(IAutobarnDatabase db, IBus bus) {
+	public VehiclesController(IAutobarnDatabase db, IBus bus,
+	ILogger<VehiclesController> logger) {
 		this.db = db;
 		this.bus = bus;
+		this.logger = logger;
 	}
 
 	private const int PAGE_SIZE = 10;
@@ -79,6 +83,7 @@ public class VehiclesController : ControllerBase {
 			Make = v.VehicleModel?.Manufacturer?.Name ?? "missing"
 		};
 		bus.PubSub.Publish(message);
+		logger.LogInformation("Published NewVehicleListed message: {message}", message);
 		return Created($"/api/vehicles/{v.Registration}", v.ToResource());
 	}
 

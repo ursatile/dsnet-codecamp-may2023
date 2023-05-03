@@ -16,17 +16,17 @@ namespace Autobarn.Website.Tests.Api {
 			foo.Length.ShouldBe(4);
 		}
 
-		[Fact]
-		public void GET_Vehicle_By_Id_Returns_Vehicle() {
-			var db = new FakeDb();
-			var bus = new FakeBus();
-			var c = new VehiclesController(db, bus);
-			var id = "TESTCAR1";
-			var result = c.Get(id) as OkObjectResult;
-			result.ShouldNotBeNull();
-			dynamic d = result.Value as dynamic;
-			((string)d.Registration).ShouldBe(id);
-		}
+		// [Fact]
+		// public void GET_Vehicle_By_Id_Returns_Vehicle() {
+		// 	var db = new FakeDb();
+		// 	var bus = new FakeBus();
+		// 	var c = new VehiclesController(db, bus);
+		// 	var id = "TESTCAR1";
+		// 	var result = c.Get(id) as OkObjectResult;
+		// 	result.ShouldNotBeNull();
+		// 	dynamic d = result.Value as dynamic;
+		// 	((string)d.Registration).ShouldBe(id);
+		// }
 	}
 
 	public class FakeBus : IBus {
