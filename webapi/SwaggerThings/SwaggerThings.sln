@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33403.182
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SwashbuckleDemo", "SwashbuckleDemo\SwashbuckleDemo.csproj", "{C1BFF823-C198-4674-951D-4E7135B1AAE9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarkdownByHand", "MarkdownByHand\MarkdownByHand.csproj", "{D29BE391-375B-406C-95F8-E872EDCDA9DC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C1BFF823-C198-4674-951D-4E7135B1AAE9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C1BFF823-C198-4674-951D-4E7135B1AAE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C1BFF823-C198-4674-951D-4E7135B1AAE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C1BFF823-C198-4674-951D-4E7135B1AAE9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D29BE391-375B-406C-95F8-E872EDCDA9DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D29BE391-375B-406C-95F8-E872EDCDA9DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D29BE391-375B-406C-95F8-E872EDCDA9DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D29BE391-375B-406C-95F8-E872EDCDA9DC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7D02181F-2D2C-4E59-823B-B64797844A16}
+	EndGlobalSection
+EndGlobal
