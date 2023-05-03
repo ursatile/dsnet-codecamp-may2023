@@ -1,3 +1,4 @@
+using System.Threading.Tasks.Dataflow;
 using Autobarn.Messages;
 using EasyNetQ;
 using Microsoft.Extensions.Hosting;
@@ -14,8 +15,9 @@ var builder = Host.CreateDefaultBuilder()
 	})
 	.ConfigureServices((context, services) => {
 		var amqp = context.Configuration.GetConnectionString("amqp");
+		var grpc = context.Configuration["GrpcServerUrl"];
 		var bus = RabbitHutch.CreateBus(amqp);
-		var channel = GrpcChannel.ForAddress("https://localhost:7152");
+		var channel = GrpcChannel.ForAddress(grpc);
 		var grpcClient = new Pricer.PricerClient(channel);
 		services.AddSingleton(grpcClient);
 		services.AddSingleton(bus);
@@ -63,9 +65,23 @@ public class PricingClientService : IHostedService {
 		var request = new PriceRequest {
 			Make = message.Make,
 			Model = message.Model,
-			Year = message.Year
+			Year = message.Year,
+			Color = message.Color
 		};
 		var reply = await grpcClient.GetPriceAsync(request);
+
+		await bus.PubSub.PublishAsync(new NewVehiclePrice
+		{
+			Registration = message.Registration,
+			Make = request.Make,
+			Model = request.Model,
+			Color = request.Color,
+			Year = request.Year,
+			ListedAt = message.ListedAt,
+			Price = reply.Price,
+            CurrencyCode = reply.CurrencyCode
+		});
+
 		logger.LogInformation("Price for {make} {model} {year} is {price} {currency}",
 			message.Make, message.Model, message.Year, reply.Price, reply.CurrencyCode);
 	}
